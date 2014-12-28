@@ -127,10 +127,12 @@ class HabraUser(object):
             self._doc.xpath("//div[@class='user_profile']/div[@class='rating-place']").pop().text.split('-')[0])
         if len(self._doc.xpath("//div[@class='user_profile']//dd[@class='bday']")):
             self._user_profile['birthday'] = self._doc.xpath("//div[@class='user_profile']//dd[@class='bday']")[0].text
-        self._user_profile['country'] = self._doc.xpath("//div[@class='user_profile']//dd/a[@class='country-name']")[
-            0].text
-        self._user_profile['region'] = self._doc.xpath("//div[@class='user_profile']//dd/a[@class='region']")[0].text
-        self._user_profile['city'] = self._doc.xpath("//div[@class='user_profile']//dd/a[@class='city']")[0].text
+        if len(self._doc.xpath("//div[@class='user_profile']//dd/a[@class='country-name']")):
+            self._user_profile['country'] = self._doc.xpath("//div[@class='user_profile']//dd/a[@class='country-name']")[0].text
+        if len(self._doc.xpath("//div[@class='user_profile']//dd/a[@class='region']")):
+            self._user_profile['region'] = self._doc.xpath("//div[@class='user_profile']//dd/a[@class='region']")[0].text
+        if len(self._doc.xpath("//div[@class='user_profile']//dd/a[@class='city']")):
+            self._user_profile['city'] = self._doc.xpath("//div[@class='user_profile']//dd/a[@class='city']")[0].text
         self._user_profile['people_tags'] = [i for i in map(lambda x: x.text, p_tags)]
         self._user_profile['registraion_date'] = registration_date[:registration_date.index('\r\n')]
 
